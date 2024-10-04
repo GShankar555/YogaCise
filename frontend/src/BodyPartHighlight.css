@@ -1,0 +1,13 @@
+.human-body-svg {
+  width: 300px;
+  height: auto;
+  cursor: pointer;
+}
+
+.human-body-svg path {
+  transition: fill 0.3s;
+}
+
+.human-body-svg path:hover {
+  fill: #ffcc00;
+}
