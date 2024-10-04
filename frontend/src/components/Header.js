@@ -38,7 +38,7 @@ const Header = () => {
             </Link>
             <Link
               to="/register"
-              className="btn btn-md lg:px-[30px] bg-orange-100 border border-orange text-orange font-medium text-sm lg:text-base hover:bg-orange-200 hover:text-white transition"
+              className="btn btn-md py-[10px] lg:px-[30px] bg-orange-100 border border-orange text-orange hover:bg-orange-200 hover:text-white"
             >
               <span>Sign Up</span>
             </Link>

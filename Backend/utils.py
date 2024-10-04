@@ -50,22 +50,22 @@ class GymExerciseRecognizer:
             back_angle = calc_angle(left_shoulder, left_hip, left_knee)
 
             if back_angle < 160:
-                self.feedback += ' Keep your back straighter! '
+                self.feedback = ' Keep your back straighter! '
             if left_hip_angle < 165 or right_hip_angle < 165:
-                self.feedback += ' Drop your hips more! '
+                self.feedback = ' Drop your hips more! '
 
             if left_knee_angle > 170 and right_knee_angle > 170:
                 self.state = "Up"
 
             if left_knee_angle < 165 and right_knee_angle < 165:
-                self.feedback += ' Almost there... lower until height of hips! '
+                self.feedback = ' Almost there... lower until height of hips! '
 
             if left_knee_angle < 140 and right_knee_angle < 140 and self.state == "Up":
                 self.state = "Down"
-                self.counter += 1
+                self.counter = 1
 
             if self.state == "Down":
-                self.feedback += ' Good rep! '
+                self.feedback = ' Good rep! '
 
             state_output = self.state
             feedback_output = self.feedback

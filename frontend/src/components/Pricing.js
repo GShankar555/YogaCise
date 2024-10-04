@@ -19,8 +19,8 @@ const Pricing = () => {
             data-aos="fade-up"
             data-aos-delay="700"
           >
-            Pick a pricing plan and get started your journey with us for build
-            your body and mind{" "}
+            Pick a pricing plan and get started your journey with us to access
+            all the features{" "}
           </p>
         </div>
         <div className="flex flex-col mx-auto items-center gap-y-5 lg:flex-row lg:gap-x-[33px]">
@@ -34,7 +34,7 @@ const Pricing = () => {
                 key={currentIndex}
                 className="bg-white w-full max-w-[368px] min-h-[668px] h-full cursor-pointer relative justify-center"
                 data-aos="fade-up"
-                data-aos-offset="100"
+                data-aos-offset="400"
                 data-aos-delay={delay}
               >
                 <div

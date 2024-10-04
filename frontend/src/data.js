@@ -67,7 +67,6 @@ export const facts = [
 ];
 export const asanadetaildesc = [
   {
-    id: "1",
     image: butterfly,
     title: "Baddha Konasana (Bound Angle Pose)",
     desc: "Baddha Konasana, also known as the Cobbler's Pose, is performed by sitting on the ground, bringing the soles of the feet together, and letting the knees fall open to the sides. You can grasp the feet with your hands or hold onto the ankles for support. The pose encourages a long, straight spine, with a subtle forward tilt of the torso to deepen the stretch, if comfortable.",
@@ -78,7 +77,6 @@ Reduces stress and anxiety.
  Eases menstrual discomfort.`,
   },
   {
-    id: "2",
     image: Halfmoon,
     title: "Ardha Chandrasana (Half Moon Pose)",
     desc: " In Ardha Chandrasana, you balance on one leg while extending the opposite leg behind you parallel to the ground, with one arm on the floor or a block for support. The other arm stretches upward, forming a straight line with your grounded arm. Your gaze can be directed forward or up, depending on your balance.",
@@ -89,7 +87,6 @@ Enhances mental focus and concentration.
 Opens chest and shoulders.`,
   },
   {
-    id: "3",
     image: downdog,
     title: "Adho Mukha Svanasana (Downward-Facing Dog)",
     desc: "Adho Mukha Svanasana is one of the foundational poses in yoga, where the body forms an inverted V-shape. Hands are pressed into the ground shoulder-width apart, and feet are hip-width apart, with the hips lifted toward the sky. The heels may or may not touch the ground, depending on flexibility.",
@@ -100,7 +97,6 @@ Improves circulation and energizes the body.
 Reduces stress and calms the nervous system.`,
   },
   {
-    id: "4",
     image: Goddess,
     title: "Utkata Konasana (Goddess Pose)",
     desc: "In Utkata Konasana, also known as Goddess Pose, you stand with your legs wide apart, toes turned out at a 45-degree angle, and knees bent deeply. The arms are raised to shoulder level or overhead, with the palms facing inward, resembling a powerful and grounded stance. ",
@@ -111,7 +107,6 @@ Improves balance and focus.
 Boosts inner strength and confidence.`,
   },
   {
-    id: "5",
     image: Natarajasana,
     title: "Natarajasana (Dancer's Pose)",
     desc: "Natarajasana, or Dancer’s Pose, is a graceful balancing pose where one leg supports the body while the opposite leg is lifted and held behind you by the ankle, with the torso gently tipping forward. The opposite arm reaches forward for balance, creating a dynamic stretch and balance challenge.",
@@ -122,7 +117,6 @@ Enhances body awareness and coordination.
 Improves posture and alignment.`,
   },
   {
-    id: "6",
     image: plank,
     title: "Kumbhakasana (Plank Pose)",
     desc: "Kumbhakasana, or Plank Pose, is a foundational strength-building posture. In this pose, the body is held in a straight line from the head to the heels, with the arms extended and the hands pressing into the ground beneath the shoulders. The core is engaged to keep the body stable and aligned.",
@@ -133,7 +127,6 @@ Enhances stability and focus.
 Increases stamina.`,
   },
   {
-    id: "7",
     image: tree,
     title: "Vrikshasana (Tree Pose)",
     desc: "Vrikshasana, or Tree Pose, is a standing balance pose where one foot is firmly grounded while the other is placed against the inner thigh or calf of the standing leg. The hands can be brought together in front of the chest or extended overhead in a prayer-like position.",
@@ -144,7 +137,6 @@ Promotes mental clarity and concentration.
 Calms the mind and reduces stress.`,
   },
   {
-    id: "8",
     image: triangle,
     title: "Utthita Trikonasana (Extended Triangle Pose)",
     desc: "In Utthita Trikonasana, or Extended Triangle Pose, the legs are placed wide apart, with one foot turned outward. The torso bends to the side over the extended leg, with one hand reaching toward the ground and the other arm extended upward. The spine remains long and straight throughout",
@@ -155,7 +147,6 @@ Opens chest and enhances breathing.
 Promotes mental focus and calmness.`,
   },
   {
-    id: "9",
     image: veera,
     title: "Virabhadrasana I (Warrior I Pose)",
     desc: "In Virabhadrasana I, or Warrior I Pose, one foot is lunged forward with the knee bent, while the back leg remains straight and extended. The torso faces forward, and the arms are lifted overhead, palms facing inward or touching in a prayer position.",
@@ -166,7 +157,6 @@ Improves posture and body alignment.
 Builds confidence and empowerment.`,
   },
   {
-    id: "10",
     image: warrior,
     title: "Virabhadrasana II (Warrior II Pose)",
     desc: " In Virabhadrasana II, or Warrior II Pose, the legs are placed in a wide stance, with one leg lunging forward and the other extended straight behind. The arms are extended parallel to the ground, with the gaze focused forward over the fingertips of the front hand.",
@@ -180,7 +170,6 @@ Builds mental and physical resilience.`,
 
 export const asanas = [
   {
-    id: "1",
     image: butterfly,
     title: "Baddha Konasana (Bound Angle Pose)",
     desc: "The pose is one of the few yoga asanas that can be practiced comfortably soon after eating",
@@ -188,7 +177,6 @@ export const asanas = [
     delay: "600",
   },
   {
-    id: "2",
     image: Halfmoon,
     title: "Ardha Chandrasana (Half Moon Pose)",
     desc: "The pose helps to strengthen the ankles and improve balance",
@@ -196,7 +184,6 @@ export const asanas = [
     delay: "800",
   },
   {
-    id: "3",
     image: downdog,
     title: "Adho Mukha Svanasana (Downward-Facing Dog)",
     desc: "It stretches the hamstring and calf muscles in the backs of the legs & shoulders",
@@ -204,7 +191,6 @@ export const asanas = [
     delay: "900",
   },
   {
-    id: "4",
     image: Goddess,
     title: "Utkata Konasana (Goddess Pose)",
     desc: "This pose is an intense hip opener that helps you connect with the body's feminine energy",
@@ -212,7 +198,6 @@ export const asanas = [
     delay: "600",
   },
   {
-    id: "5",
     image: Natarajasana,
     title: "Natarajasana (Dancer's Pose)",
     desc: "This pose is a deep backbend that requires patience, focus, and persistence.",
@@ -220,7 +205,6 @@ export const asanas = [
     delay: "800",
   },
   {
-    id: "6",
     image: plank,
     title: "Kumbhakasana (Plank Pose)",
     desc: "This pose engages your thigh muscles and lengthen the tailbone towards your heels.",
@@ -228,7 +212,6 @@ export const asanas = [
     delay: "900",
   },
   {
-    id: "7",
     image: tree,
     title: "Vrikshasana (Tree Pose)",
     desc: "This Pose strengthens the legs and core while opening the hips and stretching the inner thigh and groin muscles.",
@@ -236,7 +219,6 @@ export const asanas = [
     delay: "600",
   },
   {
-    id: "8",
     image: triangle,
     title: "Utthita Trikonasana (Extended Triangle Pose)",
     desc: "This Pose stretches inner thighs, hamstrings, calves, spine, shoulders, chest and opens hips. ",
@@ -244,7 +226,6 @@ export const asanas = [
     delay: "800",
   },
   {
-    id: "9",
     image: veera,
     title: "Virabhadrasana I (Warrior I Pose)",
     desc: "Strengthens and tones the arms, legs and lower back. · Improves balance in the body, helps increase stamina.",
@@ -252,7 +233,6 @@ export const asanas = [
     delay: "900",
   },
   {
-    id: "10",
     image: warrior,
     title: "Virabhadrasana II (Warrior II Pose)",
     desc: "This pose strengthening your legs, primarily your quads and hamstrings, improving your posture.",
@@ -287,73 +267,77 @@ export const courses = [
 
 export const pricing = [
   {
-    title: "Single yoga class",
-    price: "$15.",
+    title: "Basic",
+    price: "$0",
     list: [
       {
         icon: <BsCheck />,
-        name: "Pay as you go",
+        name: "AI-Powered Posture Correction",
       },
       {
         icon: <BsCheck />,
-        name: "Perfect for non-residence",
+        name: "Access to 10 Basic Workouts",
       },
       {
         icon: <BsCheck />,
-        name: "Acces to all classes",
+        name: "Weekly Progress Reports",
       },
     ],
-    buttonText: "Book now",
+    buttonText: "Start Now",
     buttonIcon: <BsChevronRight />,
     delay: "600",
   },
   {
-    title: "Single yoga class",
-    price: "$60.",
+    title: "Advanced",
+    price: "$60",
     list: [
       {
         icon: <BsCheck />,
-        name: "Pay as you go",
+        name: "AI-Powered Posture Correction",
       },
       {
         icon: <BsCheck />,
-        name: "Perfect for non-residence",
+        name: "Access to All Workouts",
       },
       {
         icon: <BsCheck />,
-        name: "Acces to all classes",
+        name: "Real-Time Feedback on Poses",
       },
       {
         icon: <BsCheck />,
-        name: "Acces to all mentors",
+        name: "Personalized Workout Plans",
       },
     ],
-    buttonText: "Book now",
+    buttonText: "Start Now",
     buttonIcon: <BsChevronRight />,
     delay: "800",
   },
   {
-    title: "Single yoga class",
-    price: "$150.",
+    title: "Premium",
+    price: "$150",
     list: [
       {
         icon: <BsCheck />,
-        name: "Pay as you go",
+        name: "AI-Powered Posture Correction",
       },
       {
         icon: <BsCheck />,
-        name: "Perfect for non-residence",
+        name: "Access to All Workouts",
       },
       {
         icon: <BsCheck />,
-        name: "Acces to all classes",
+        name: "Real-Time Feedback on Poses",
       },
       {
         icon: <BsCheck />,
-        name: "Acces to all mentors",
+        name: "One-on-One Virtual Coaching",
+      },
+      {
+        icon: <BsCheck />,
+        name: "Personalized Workout & Nutrition Plans",
       },
     ],
-    buttonText: "Book now",
+    buttonText: "Start Now",
     buttonIcon: <BsChevronRight />,
     delay: "900",
   },

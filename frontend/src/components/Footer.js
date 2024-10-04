@@ -2,7 +2,7 @@ import React from "react";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-import Logo from "../assets/img/logo.png";
+import Logo from "../assets/img/orange_bg_logo.png";
 
 import { FaYoutube, FaInstagram, FaGithub } from "react-icons/fa";
 const Footer = () => {
@@ -11,7 +11,7 @@ const Footer = () => {
     offset: 100,
   });
   return (
-    <footer className="pb-[70px]" data-aos="fade-up" data-aos-offset="200">
+    <footer className="pb-[70px] bg-orange text-white">
       <div className="container mx-auto">
         <div className="flex flex-col justify-between items-center lg:flex-row gap-y-5">
           <a href="#">
