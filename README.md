@@ -1,1 +1,1 @@
-# YogaCise
+# YogaCise Ai based Yoga and Gym Trainer
