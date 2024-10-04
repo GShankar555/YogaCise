@@ -1,13 +1,56 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@layer base {
+  a {
+    @apply hover:text-orange transition;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-heading;
+  }
+  .bg-custom {
+    background-image: url("./assets/img/background.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .h1 {
+    @apply text-[36px] leading-[46px] lg:text-[70px] lg:leading-[80px] font-extrabold;
+  }
+  .h2 {
+    @apply text-[26px] leading-[36px] lg:text-[50px] lg:leading-[60px] font-bold;
+  }
+  .h3 {
+    @apply text-[18px] leading-[28px] lg:text-[34px] lg:leading-[44px] font-semibold;
+  }
+  .section-sm {
+    @apply py-[70px];
+  }
+  .section-lg {
+    @apply py-[150px];
+  }
+  .btn {
+    @apply font-medium rounded text-base bg-shape;
+  }
+  .btn-sm {
+    @apply h-[48px] px-[25px];
+  }
+  .btn-md {
+    @apply h-[50px] px-[16px];
+  }
+  .btn-lg {
+    @apply h-[58px] rounded-md px-[40px];
+  }
+  .btn-orange {
+    @apply bg-orange text-white hover:bg-orange-hover transition;
+  }
+  .form-control {
+    @apply h-[58px] border border-stroke-2 rounded pl-6 placeholder:text-paragraph text-paragraph outline-none;
+  }
 }
