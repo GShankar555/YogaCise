@@ -72,19 +72,9 @@ Make sure you have the following installed:
 5. **Run the frontend server:**
     ```bash
     npm start
+ 
+![Home page]("./Home Page.png")
 
-**Project Structure**
+![Yoga Interface]("./Yoga.png")
 
-YOGACISE/
-├── backend/
-│   ├── app.py                
-│   ├── requirements.txt      
-|   ├── angle_teacher_yoga.csv
-│   └── utils.py
-└── frontend/
-    ├── src/
-    │   ├── components/       
-    │   ├── pages/            
-    │   ├── App.js            
-    ├── public/
-    ├── package.json          
+![Yoga Interface]("./Gym.png")
