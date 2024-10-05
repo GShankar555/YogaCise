@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 
-const TextToSpeech = ({ text }) => {
+const TextToSpeech = ({ text, onComplete }) => {
   const [synth] = useState(window.speechSynthesis);
 
   useEffect(() => {
     if (text) {
       const utterance = new SpeechSynthesisUtterance(text);
+      utterance.onend = () => {
+        if (onComplete) {
+          onComplete();
+        }
+      };
       synth.cancel();
       synth.speak(utterance);
     }
@@ -13,7 +18,7 @@ const TextToSpeech = ({ text }) => {
     return () => {
       synth.cancel();
     };
-  }, [text, synth]);
+  }, [text, synth, onComplete]);
 
   return null;
 };

@@ -356,7 +356,7 @@ class GymExerciseRecognizer:
                 self.feedback = "Pull harder to reach full height. Focus on using your back muscles rather than just your arms."
 
             if (right_wrist[0] - right_elbow[0]) > 0.1:
-                self.feedback += " Elbows flaring out too much—keep them closer to your sides for better back engagement."
+                self.feedback = " Elbows flaring out too much—keep them closer to your sides for better back engagement."
 
             state_output = self.state
             feedback_output = self.feedback
@@ -392,7 +392,7 @@ class GymExerciseRecognizer:
                 self.feedback = "Lift your shoulders higher for a full crunch. Engage your core and not your neck."
 
             if landmarks[self.mp_pose.PoseLandmark.NOSE.value].y - landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y < 0.1:
-                self.feedback += " Watch your neck position—avoid curling it forward to prevent strain."
+                self.feedback = " Watch your neck position—avoid curling it forward to prevent strain."
 
             state_output = self.state
             feedback_output = self.feedback
@@ -428,7 +428,7 @@ class GymExerciseRecognizer:
                 self.feedback = "Bend deeper to get a full range of motion and better activate your obliques."
 
             if abs(left_shoulder[1] - left_hip[1]) < 0.05:
-                self.feedback += " Try to keep your spine straight while bending to avoid unnecessary strain."
+                self.feedback = " Try to keep your spine straight while bending to avoid unnecessary strain."
 
             state_output = self.state
             feedback_output = self.feedback
@@ -468,7 +468,7 @@ class GymExerciseRecognizer:
                 self.feedback = "Watch your posture. Ensure you're standing upright with your core engaged."
 
             if abs(left_elbow[0] - left_shoulder[0]) > 0.05:
-                self.feedback += " Avoid locking your elbows—keep a slight bend for proper shoulder engagement."
+                self.feedback = " Avoid locking your elbows—keep a slight bend for proper shoulder engagement."
 
             state_output = self.state
             feedback_output = self.feedback
@@ -476,6 +476,332 @@ class GymExerciseRecognizer:
 
         except Exception as e:
             pass
+
+    
+    def recognise_deadlift(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_shoulder = [landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            left_hip = [landmarks[self.mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_HIP.value].y]
+            left_knee = [landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+            left_ankle = [landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+
+            right_shoulder = [landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+            right_hip = [landmarks[self.mp_pose.PoseLandmark.RIGHT_HIP.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+            right_knee = [landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+            right_ankle = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
+
+            # Calculate angles
+            left_knee_angle = calc_angle(left_hip, left_knee, left_ankle)
+            right_knee_angle = calc_angle(right_hip, right_knee, right_ankle)
+            back_angle = calc_angle(left_shoulder, left_hip, left_knee)
+
+            # Feedback logic
+            if back_angle > 160:
+                self.feedback = ' Keep your back straight! '
+            if left_knee_angle > 170 and right_knee_angle > 170:
+                self.state = "Up"
+            if left_knee_angle < 165 and right_knee_angle < 165:
+                self.feedback = ' Almost there... keep lowering! '
+            if left_knee_angle < 140 and right_knee_angle < 140 and self.state == "Up":
+                self.state = "Down"
+                self.counter += 1
+            if self.state == "Down":
+                self.feedback = ' Good rep! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in deadlift detection: {e}")
+
+    def recognise_bench_press(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_shoulder = [landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            left_elbow = [landmarks[self.mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+            left_wrist = [landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+
+            right_shoulder = [landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+            right_elbow = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ELBOW.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ELBOW.value].y]
+            right_wrist = [landmarks[self.mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
+
+            # Calculate angles
+            left_elbow_angle = calc_angle(left_shoulder, left_elbow, left_wrist)
+            right_elbow_angle = calc_angle(right_shoulder, right_elbow, right_wrist)
+
+            # Feedback logic
+            if left_elbow_angle < 90 or right_elbow_angle < 90:
+                self.feedback = ' Lower the bar more! '
+            if left_elbow_angle > 160 and right_elbow_angle > 160:
+                self.state = "Up"
+            if left_elbow_angle < 100 and right_elbow_angle < 100 and self.state == "Up":
+                self.state = "Down"
+                self.counter += 1
+            if self.state == "Down":
+                self.feedback = ' Good rep! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in bench press detection: {e}")
+
+    def recognise_leg_press(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_hip = [landmarks[self.mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_HIP.value].y]
+            left_knee = [landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+            left_ankle = [landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+
+            right_hip = [landmarks[self.mp_pose.PoseLandmark.RIGHT_HIP.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+            right_knee = [landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+            right_ankle = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
+
+            # Calculate angles
+            left_knee_angle = calc_angle(left_hip, left_knee, left_ankle)
+            right_knee_angle = calc_angle(right_hip, right_knee, right_ankle)
+
+            # Feedback logic
+            if left_knee_angle > 170 and right_knee_angle > 170:
+                self.state = "Up"
+            if left_knee_angle < 140 and right_knee_angle < 140 and self.state == "Up":
+                self.state = "Down"
+                self.counter += 1
+                self.feedback = ' Good rep! '
+            if left_knee_angle < 160 and right_knee_angle < 160:
+                self.feedback = ' Lower your knees more! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in leg press detection: {e}")
+
+    def recognise_tricep_dips(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_elbow = [landmarks[self.mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+            left_shoulder = [landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            left_wrist = [landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+
+            right_elbow = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ELBOW.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ELBOW.value].y]
+            right_shoulder = [landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+            right_wrist = [landmarks[self.mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
+
+            # Calculate angles
+            left_elbow_angle = calc_angle(left_shoulder, left_elbow, left_wrist)
+            right_elbow_angle = calc_angle(right_shoulder, right_elbow, right_wrist)
+
+            # Feedback logic
+            if left_elbow_angle < 90 and right_elbow_angle < 90:
+                self.state = "Down"
+                self.counter += 1
+                self.feedback = ' Good rep! '
+            if left_elbow_angle > 140 and right_elbow_angle > 140:
+                self.state = "Up"
+            if left_elbow_angle < 100 and right_elbow_angle < 100:
+                self.feedback = ' Lower down more! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in tricep dips detection: {e}")
+
+    def recognise_overhead_press(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_shoulder = [landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            left_elbow = [landmarks[self.mp_pose.PoseLandmark.LEFT_ELBOW.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ELBOW.value].y]
+            left_wrist = [landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].y]
+
+            right_shoulder = [landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+            right_elbow = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ELBOW.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ELBOW.value].y]
+            right_wrist = [landmarks[self.mp_pose.PoseLandmark.RIGHT_WRIST.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_WRIST.value].y]
+
+            # Calculate angles
+            left_elbow_angle = calc_angle(left_shoulder, left_elbow, left_wrist)
+            right_elbow_angle = calc_angle(right_shoulder, right_elbow, right_wrist)
+
+            # Feedback logic
+            if left_elbow_angle < 90 and right_elbow_angle < 90:
+                self.state = "Up"
+                self.counter += 1
+                self.feedback = ' Good rep! '
+            if left_elbow_angle > 160 and right_elbow_angle > 160:
+                self.state = "Down"
+            if left_elbow_angle < 100 and right_elbow_angle < 100:
+                self.feedback = ' Lower down more! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in overhead press detection: {e}")
+
+    def recognise_plank(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_shoulder = [landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
+            right_shoulder = [landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].x,
+                            landmarks[self.mp_pose.PoseLandmark.RIGHT_SHOULDER.value].y]
+            left_hip = [landmarks[self.mp_pose.PoseLandmark.LEFT_HIP.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_HIP.value].y]
+            right_hip = [landmarks[self.mp_pose.PoseLandmark.RIGHT_HIP.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_HIP.value].y]
+
+            # Check alignment
+            if abs(left_shoulder[1] - right_shoulder[1]) < 0.05 and abs(left_hip[1] - right_hip[1]) < 0.05:
+                self.feedback = ' Great plank position! '
+                self.state = "Plank"
+                self.counter += 1
+            else:
+                self.feedback = ' Keep your body straight! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in plank detection: {e}")
+
+    def recognise_wall_sit(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_knee = [landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+            left_ankle = [landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+
+            right_knee = [landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+            right_ankle = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
+
+            # Check angles
+            left_knee_angle = calc_angle(left_knee, left_ankle, left_knee)
+            right_knee_angle = calc_angle(right_knee, right_ankle, right_knee)
+
+            if left_knee_angle < 90 and right_knee_angle < 90:
+                self.feedback = ' Great wall sit position! '
+                self.state = "Sitting"
+                self.counter += 1
+            else:
+                self.feedback = ' Lower down more! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in wall sit detection: {e}")
+
+    def recognise_calf_raise(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_ankle = [landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
+            left_knee = [landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+
+            right_ankle = [landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_ANKLE.value].y]
+            right_knee = [landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+
+            if abs(left_ankle[1] - left_knee[1]) < 0.05 and abs(right_ankle[1] - right_knee[1]) < 0.05:
+                self.feedback = ' Good calf raise position! '
+                self.state = "Raising"
+                self.counter += 1
+            else:
+                self.feedback = ' Raise higher! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in calf raise detection: {e}")
+
+    def recognise_high_knees(self, detection):
+        try:
+            global feedback_output, counter_output, state_output
+
+            landmarks = detection.pose_landmarks.landmark
+            left_knee = [landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.LEFT_KNEE.value].y]
+            right_knee = [landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].x,
+                        landmarks[self.mp_pose.PoseLandmark.RIGHT_KNEE.value].y]
+
+            # Check height of knees
+            if left_knee[1] > 0.5 and right_knee[1] > 0.5:
+                self.feedback = ' Good high knees! '
+                self.state = "High Knees"
+                self.counter += 1
+            else:
+                self.feedback = ' Raise your knees higher! '
+
+            state_output = self.state
+            feedback_output = self.feedback
+            counter_output = self.counter
+
+        except Exception as e:
+            print(f"Error in high knees detection: {e}")
 
 
     def generate_frames(self,feed,user_choice):
@@ -514,15 +840,24 @@ class GymExerciseRecognizer:
                     
                         exercise_recognition_map = {
                             "0001": self.recognise_squat,
-                            "0002": self.recognise_situp,
-                            "0003": self.recognise_curl,
-                            "0004": self.recognise_pushup,
-                            "0005": self.recognise_lunges,
-                            "0006": self.recognise_glutes,
-                            "0007": self.recognise_pullups,
-                            "0008": self.recognise_crunches,
-                            "0009": self.recognise_side_bend,
-                            "00010": self.recognise_arm_delt_fly,
+                            "0002": self.recognise_lunges,
+                            "0003": self.recognise_crunches,
+                            "0004": self.recognise_situp,
+                            "0005": self.recognise_side_bend,
+                            "0006": self.recognise_curl,
+                            "0007": self.recognise_pushup,
+                            "0008": self.recognise_pullups,
+                            "0009": self.recognise_arm_delt_fly,
+                            "00010": self.recognise_glutes,
+                            "00011": self.recognise_deadlift,
+                            "00012": self.recognise_bench_press,
+                            "00013": self.recognise_leg_press,
+                            "00014": self.recognise_tricep_dips,
+                            "00015": self.recognise_overhead_press,
+                            "00016": self.recognise_plank,
+                            "00017": self.recognise_wall_sit,
+                            "00018": self.recognise_calf_raise,
+                            "00019": self.recognise_high_knees
                         }
                         exercise_recognition_map.get(user_choice, lambda x: None)(detection)
                         cv2.rectangle(image, (0,0), (width, int(height*0.1)), (245,117,16), -1)
@@ -572,6 +907,16 @@ class YogaExerciseRecognizer:
                             "8":"Utthita Trikonasana",
                             "9":"Virabhadrasana I",
                             "10":"Virabhadrasana II",
+                            "11": "Bhujangasana",
+                            "12": "Dhanurasana",
+                            "13": "Setu Bandhasana",
+                            "14": "Pavanamuktasana",
+                            "15": "Balasana",
+                            "16": "Paschimottanasana",
+                            "17": "Savasana",
+                            "18": "Trikonasana",
+                            "19": "Salamba Sarvangasana",
+                            "20":"Matsyasana"
                         }
         with open('angle_teacher_yoga.csv', 'r') as inputCSV:
             reader = csv.reader(inputCSV)

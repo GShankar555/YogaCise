@@ -5,6 +5,7 @@ const VideoStream = ({ userChoice, flag }) => {
   const [feedback, setFeedback] = useState("");
   const [counter, setCounter] = useState(0);
   const [state, setState] = useState("");
+  const [streamActive, setStreamActive] = useState(true); // Stream active state
 
   const fetchFeedback = async () => {
     try {
@@ -19,12 +20,16 @@ const VideoStream = ({ userChoice, flag }) => {
   };
 
   useEffect(() => {
-    fetchFeedback();
-    const interval = setInterval(fetchFeedback, 1000);
-    return () => clearInterval(interval);
-  }, []);
+    if (flag !== "yoga" && streamActive) {
+      fetchFeedback();
+      const interval = setInterval(fetchFeedback, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [flag, streamActive]);
+
   useEffect(() => {
     const videoElement = document.querySelector("img");
+
     const cancelFeed = async () => {
       try {
         const response = await fetch("http://localhost:5000/cancel_feed");
@@ -37,53 +42,60 @@ const VideoStream = ({ userChoice, flag }) => {
         console.error("Error canceling feed:", error);
       }
     };
-    const handleBeforeUnload = (event) => {
-      const confirmationMessage = "Do you want to stop user training?";
-      event.returnValue = confirmationMessage;
-      return confirmationMessage;
-    };
 
-    const handleUnload = (event) => {
+    return () => {
       if (videoElement) {
         videoElement.src = "";
       }
       cancelFeed();
     };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-    window.addEventListener("unload", handleUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-      window.removeEventListener("unload", handleUnload);
-      const shouldStop = window.confirm("Do you want to stop user training?");
-      if (videoElement && shouldStop) {
-        videoElement.src = "";
-        cancelFeed();
-      } else {
-        window.onsubmit((event) => {
-          event.preventdefaults();
-        });
-        console.log("Video stream continues.");
-      }
-    };
   }, []);
+
+  const handleStopStream = async () => {
+    const confirmStop = window.confirm("Do you want to stop training?");
+    if (confirmStop) {
+      await fetch("http://localhost:5000/cancel_feed"); // Backend API to stop stream
+      setStreamActive(false); // Stop frontend stream
+    }
+  };
 
   return (
     <div className="container">
       <div className="row">
-        <div className="col-lg-8">
-          <img
-            src={`http://localhost:5000/video_feed?id=${userChoice}&flag=${flag}`}
-            alt="Live Stream"
-          />
+        <div className="flex justify-center">
+          {streamActive ? (
+            <img
+              src={`http://localhost:5000/video_feed?id=${userChoice}&flag=${flag}`}
+              alt="Live Stream"
+              className={`w-[700px] h-[500px] object-cover border-4 border-blue-500 rounded-lg shadow-lg ${flag==="gym"?'mt-40':""}`}
+            />
+          ) : (
+            <div>Stream stopped</div>
+          )}
         </div>
-        <div className="col-lg-4">
-          <h3>Feedback: {feedback}</h3>
-          <h3>Counter: {counter}</h3>
-          <h3>State: {state}</h3>
-          <Speech text={feedback}/>
-        </div>
+
+        {flag === "gym" && streamActive && (
+          <div className="col-lg-4">
+            <h3>Feedback: {feedback}</h3>
+            <h3>Counter: {counter}</h3>
+            <h3>State: {state}</h3>
+          </div>
+        )}
+
+        <Speech text={feedback} />
       </div>
+
+      {/* Stop Training Button */}
+      {streamActive && (
+        <div className="mt-6 flex justify-center ">
+          <button
+            onClick={handleStopStream}
+            className="px-4 py-3 bg-red-600 text-white rounded-lg bg-orange hover:bg-orange-200 transition duration-300"
+          >
+            Stop Training
+          </button>
+        </div>
+      )}
     </div>
   );
 };

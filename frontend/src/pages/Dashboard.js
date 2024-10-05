@@ -111,27 +111,41 @@ const Dashboard = () => {
   const [height, setHeight] = useState("");
   const [bmi, setBmi] = useState(null);
   const [message, setMessage] = useState("");
+  const [recommendations, setRecommendations] = useState(null);
 
-  const calculateBMI = () => {
+  const calculateBMI = async () => {
     if (weight && height) {
-      const heightInMeters = height / 100;
-      const bmiValue = (weight / (heightInMeters * heightInMeters)).toFixed(1);
-      setBmi(bmiValue);
-      let bmiMessage = "";
+      const heightInMeters = height / 100; // Convert height from cm to meters
+      const calculatedBMI = weight / (heightInMeters * heightInMeters);
+      setBmi(calculatedBMI.toFixed(2));
 
-      if (bmiValue < 18.5) {
-        bmiMessage = "Underweight";
-      } else if (bmiValue >= 18.5 && bmiValue < 24.9) {
-        bmiMessage = "Normal weight";
-      } else if (bmiValue >= 25 && bmiValue < 29.9) {
-        bmiMessage = "Overweight";
+      // Determine the BMI category for the message
+      if (calculatedBMI < 18.5) {
+        setMessage("You are underweight.");
+      } else if (calculatedBMI < 24.9) {
+        setMessage("You have a normal weight.");
+      } else if (calculatedBMI < 29.9) {
+        setMessage("You are overweight.");
       } else {
-        bmiMessage = "Obesity";
+        setMessage("You are obese.");
       }
-      setMessage(bmiMessage);
+
+      try {
+        const response = await fetch(
+          `http://127.0.0.1:5000/bmi?bmi=${calculatedBMI.toFixed(2)}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          setRecommendations(data);
+        } else {
+          setRecommendations(null);
+          console.error("Error fetching recommendations:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching recommendations:", error);
+      }
     } else {
-      setBmi(null);
-      setMessage("Please enter valid values.");
+      alert("Please enter valid weight and height.");
     }
   };
 
@@ -241,6 +255,25 @@ const Dashboard = () => {
             maxValue={50}
           />
         </div>
+      </Box>
+      <Box>
+        {recommendations && (
+          <div className="mt-4 text-center">
+            <h2 className="text-lg font-bold">Recommendations</h2>
+            <p className="text-sm">
+              Foods: {recommendations.recommended_foods.join(", ")}
+            </p>
+            <p className="text-sm">
+              Exercises: {recommendations.recommended_exercises.join(", ")}
+            </p>
+            <p className="text-sm">
+              Daily Caloric Intake: {recommendations.daily_caloric_intake}
+            </p>
+            <p className="text-sm">
+              Calories Burned: {recommendations.calories_burned}
+            </p>
+          </div>
+        )}
       </Box>
       <Container>
         <div className="flex justify-around p-5">

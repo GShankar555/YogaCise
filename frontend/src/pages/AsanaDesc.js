@@ -21,9 +21,7 @@ const YogaAsanaDescription = () => {
   const handleGoBack = () => {
     navigate(-1); // Navigate to the previous page
   };
-  console.log(id);
 
-  // Handle closing modal when clicking outside of it
   const handleOutsideClick = (e) => {
     if (e.target.id === "modal-container") {
       handleModalClose();
@@ -36,7 +34,7 @@ const YogaAsanaDescription = () => {
 
   return (
     <>
-      <div className="min-h-screen w-full flex items-start mt-52 bg-gray-100 p-6 relative">
+      <div className="min-h-screen w-full flex items-start bg-gray-100 p-6 relative mt-40">
         <div
           onClick={handleGoBack}
           className="absolute top-6 left-6 cursor-pointer flex items-center text-lg font-medium text-gray-700 hover:text-gray-900 transition duration-300 hover:text-orange-200"
@@ -49,11 +47,11 @@ const YogaAsanaDescription = () => {
             <img
               src={asana.image}
               alt={asana.title}
-              className="w-full h-auto object-cover rounded-lg shadow-lg ml-64"
+              className="w-full h-auto object-cover rounded-lg shadow-lg"
             />
           </div>
 
-          <div className="w-full lg:w-1/2 p-6 flex flex-col justify-center space-y-6 ml-52">
+          <div className="w-full lg:w-1/2 p-6 flex flex-col justify-center space-y-6">
             <div>
               <h1 className="text-5xl font-bold mb-5">{asana.title}</h1>
               <p className=" text-xl text-gray-700 mb-4">{asana.desc}</p>
@@ -119,7 +117,16 @@ const YogaAsanaDescription = () => {
           </div>
         )}
       </div>
-      {start && <VideoStream userChoice={id} flag={'yoga'} />}
+
+      <div className="flex justify-center mt-4">
+        {start && (
+          <VideoStream
+            userChoice={id}
+            flag={"yoga"}
+            className="w-[800px] h-[450px] object-cover"
+          />
+        )}
+      </div>
     </>
   );
 };
