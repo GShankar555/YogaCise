@@ -4,7 +4,7 @@ import cv2
 from flask_cors import CORS
 import google.generativeai as genai
 
-genai.configure(api_key="AIzaSyApQUwjsjZNblOmOvfOcv8dci4tTY8orEg")
+genai.configure(api_key="")
 model = genai.GenerativeModel("gemini-1.5-flash")
 
 app = Flask(__name__)
@@ -63,31 +63,29 @@ def bmi_feedback():
         )
         response = model.generate_content(prompt)
         recommendations = response.text.strip().split('\n')
-        print(recommendations)
-        food_recommendations = []
-        exercise_recommendations = []
-        caloric_intake = ""
-        calories_burned = ""
-        current_section = None
-        for recommendation in recommendations:
-            recommendation = recommendation.strip()
-            if recommendation.startswith("##"):
-                current_section = recommendation.split("##")[1].strip().lower().replace(" ", "_")
-            elif current_section == "Food Recommendations" and recommendation.startswith(""):
-                food_recommendations.append(recommendation.strip("").strip())
-            elif current_section == "Exercise Recommendations" and recommendation.startswith(""):
-                exercise_recommendations.append(recommendation.strip("* ").strip())
-            elif current_section == "Daily Caloric Intake" and "calories per day" in recommendation:
-                caloric_intake = recommendation.strip()
-            elif current_section == "Burn Suggestions" and "burn at least" in recommendation:
-                calories_burned = recommendation.strip()
+        sections = response.text.strip().split("##")
+
+        # Create a dictionary to store sections
+        response_dict = {}
+
+        for section in sections:
+            if section.strip():  # Skip empty sections
+                # Separate the title from the content
+                title, content = section.split("\n", 1)
+                response_dict[title.strip()] = content.strip()
+
+        # Print extracted sections
+        food_recommendations = response_dict.get("Food Recommendations")
+        exercise_recommendations = response_dict.get("Exercise Recommendations")
+        daily_caloric_intake = response_dict.get("Daily Caloric Intake")
+        burn_suggestions = response_dict.get("Burn Suggestions")
 
         return jsonify({
             "bmi_category": category,
             "recommended_foods": food_recommendations,
             "recommended_exercises": exercise_recommendations,
-            "daily_caloric_intake": caloric_intake,
-            "calories_burned": calories_burned
+            "daily_caloric_intake": daily_caloric_intake,
+            "calories_burned": burn_suggestions
         })
 
     except ValueError:
