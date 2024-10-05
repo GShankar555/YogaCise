@@ -73,8 +73,16 @@ Make sure you have the following installed:
     ```bash
     npm start
  
-![Home page]("./Home Page.png")
+**Home Page**
 
-![Yoga Interface]("./Yoga.png")
+![Home page](https://github.com/GShankar555/YogaCise/blob/main/Home%20Page.png)
 
-![Yoga Interface]("./Gym.png")
+
+**Yoga Pose Correction**
+
+![Yoga Interface](https://github.com/GShankar555/YogaCise/blob/main/Yoga.png)
+
+
+**Gym Pose Correction**
+
+![Yoga Interface](https://github.com/GShankar555/YogaCise/blob/main/Gym.png)
