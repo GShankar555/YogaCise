@@ -1,6 +1,6 @@
 # YOGACISE: AI Powered Gym and Yoga Trainer
 
-YOGACISE is an innovative application that leverages AI to provide real-time feedback on gym and yoga poses. By utilizing advanced technologies such as MediaPipe and OpenCV for video processing, this project aims to enhance the user experience by helping individuals improve their workout routines and achieve better results.
+YOGACISE is an innovative application that leverages AI to provide real-time feedback on gym and yoga poses. By utilizing advanced technologies such as MediaPipe and OpenCV for video processing, this project aims to enhance the user experience by helping individuals improve their workout routines and achieve better results. This AI framework is able to Perform for 19 Gym Exercises and 19 Yoga Exercises.
 
 ## Table of Contents
 
