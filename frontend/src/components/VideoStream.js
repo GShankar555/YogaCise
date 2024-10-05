@@ -67,7 +67,7 @@ const VideoStream = ({ userChoice, flag }) => {
             <img
               src={`http://localhost:5000/video_feed?id=${userChoice}&flag=${flag}`}
               alt="Live Stream"
-              className={`w-[700px] h-[500px] object-cover border-4 border-blue-500 rounded-lg shadow-lg ${flag==="gym"?'mt-40':""}`}
+              className={`w-[900px] h-[500px] object-cover border-4 border-blue-500 rounded-lg shadow-lg ${flag==="gym"?'mt-40':""}`}
             />
           ) : (
             <div>Stream stopped</div>

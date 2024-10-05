@@ -139,7 +139,7 @@ class GymExerciseRecognizer:
         global state_output
         
         try:
-
+            range_flag=True
             landmarks = detection.pose_landmarks.landmark
 
             left_wrist = [landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].x, landmarks[self.mp_pose.PoseLandmark.LEFT_WRIST.value].y]

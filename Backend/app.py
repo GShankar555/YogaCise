@@ -47,10 +47,7 @@ def get_feedback():
 @app.route('/bmi', methods=['GET'])
 def bmi_feedback():
     try:
-        # Get BMI from query parameters
         bmi = float(request.args.get('bmi'))
-        
-        # Determine BMI category
         if bmi < 18.5:
             category = "underweight"
         elif 18.5 <= bmi < 24.9:
@@ -59,40 +56,31 @@ def bmi_feedback():
             category = "overweight"
         else:
             category = "obese"
-
-        # Create prompt for Generative AI
         prompt = (
             f"Based on a BMI of {bmi}, which falls into the '{category}' category, "
-            "provide food recommendations, exercise recommendations, "
-            "and the daily caloric intake and burn suggestions."
+            "provide 1. food recommendations, 2. exercise recommendations, "
+            "3. The daily caloric intake and 4. burn suggestions.The format is important and for every heading 1 line is recomended."
         )
-
         response = model.generate_content(prompt)
         recommendations = response.text.strip().split('\n')
         print(recommendations)
-
         food_recommendations = []
         exercise_recommendations = []
         caloric_intake = ""
         calories_burned = ""
-
+        current_section = None
         for recommendation in recommendations:
-            if recommendation.startswith("## Food Recommendations"):
-                current_section = "food"
-            elif recommendation.startswith("## Exercise Recommendations"):
-                current_section = "exercise"
-            elif recommendation.startswith("## Daily Calorie Intake and Burn:"):
-                current_section = "calories"
-            elif current_section == "food" and recommendation.startswith("*"):
-                food_recommendations.append(recommendation.strip("* ").strip())
-            elif current_section == "exercise" and recommendation.startswith("*"):
+            recommendation = recommendation.strip()
+            if recommendation.startswith("##"):
+                current_section = recommendation.split("##")[1].strip().lower().replace(" ", "_")
+            elif current_section == "Food Recommendations" and recommendation.startswith(""):
+                food_recommendations.append(recommendation.strip("").strip())
+            elif current_section == "Exercise Recommendations" and recommendation.startswith(""):
                 exercise_recommendations.append(recommendation.strip("* ").strip())
-            elif current_section == "calories":
-                if recommendation.startswith("*"):
-                    if "calories per day" in recommendation:
-                        caloric_intake = recommendation.strip()
-                    elif "burn at least" in recommendation:
-                        calories_burned = recommendation.strip()
+            elif current_section == "Daily Caloric Intake" and "calories per day" in recommendation:
+                caloric_intake = recommendation.strip()
+            elif current_section == "Burn Suggestions" and "burn at least" in recommendation:
+                calories_burned = recommendation.strip()
 
         return jsonify({
             "bmi_category": category,
