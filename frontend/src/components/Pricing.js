@@ -4,20 +4,20 @@ import { pricing } from "../data";
 const Pricing = () => {
   const [index, setIndex] = useState(0);
   return (
-    <section className="section-sm lg:section-lg bg-section">
+    <section className="section-sm bg-section">
       <div className="container mx-auto">
-        <div className="text-center mb-7 lg:mb-[70px]">
+        <div className="text-center lg:mb-[50px]">
           <h2
             className="h2 mb-3 lg:mb-[18px]"
             data-aos="fade-up"
-            data-aos-delay="600"
+            data-aos-delay="200"
           >
             Pick a Pricing Plan
           </h2>
           <p
             className="max-w-[398px] mx-auto"
             data-aos="fade-up"
-            data-aos-delay="700"
+            data-aos-delay="200"
           >
             Pick a pricing plan and get started your journey with us to access
             all the features{" "}
@@ -80,7 +80,7 @@ const Pricing = () => {
                       {buttonText}
                       <div
                         className={`${
-                          index == currentIndex ? "bg-orange-200" : "bg-orange"
+                          index === currentIndex ? "bg-orange-200" : "bg-orange"
                         } w-[50px] h-[50px] flex justify-center items-center absolute right-0 rounded text-white`}
                       >
                         {buttonIcon}

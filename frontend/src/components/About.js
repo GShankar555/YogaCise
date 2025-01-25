@@ -11,14 +11,14 @@ const About = () => {
               <div
                 className="title text-left font-semibold text-6xl"
                 data-aos="fade-left"
-                data-aos-delay="500"
+                data-aos-delay="400"
               >
                 About Us
               </div>
               <h2
                 className="italic text-xl mt-4 text-paragraph"
                 data-aos="fade-left"
-                data-aos-delay="500"
+                data-aos-delay="400"
               >
                 ~ We Are Leading in AI <br /> Based Training
               </h2>
@@ -49,7 +49,7 @@ const About = () => {
                 alt="About Us"
                 className="bouncing-image"
                 data-aos="fade-down"
-                data-aos-delay="500"
+                data-aos-delay="400"
               />
               <div className="overlay-box absolute inset-0 flex items-center justify-center bg-opacity-50"></div>
             </div>

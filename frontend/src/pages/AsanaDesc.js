@@ -34,7 +34,7 @@ const YogaAsanaDescription = () => {
 
   return (
     <>
-      <div className="min-h-screen w-full flex items-start bg-gray-100 p-6 relative mt-40">
+      <div className="w-full flex items-start bg-gray-100 p-6 relative mt-40">
         <div
           onClick={handleGoBack}
           className="absolute top-6 left-6 cursor-pointer flex items-center text-lg font-medium text-gray-700 hover:text-gray-900 transition duration-300 hover:text-orange-200"

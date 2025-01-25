@@ -6,4 +6,4 @@ numpy
 requests
 mediapipe
 numpy
-csv 
+csv

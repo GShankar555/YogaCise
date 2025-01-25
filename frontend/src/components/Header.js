@@ -18,11 +18,11 @@ const Header = () => {
       <header
         className={`${
           header ? "top-4" : "top-9"
-        } fixed bg-white w-full max-w-[90vw] lg:max-w-[1170px] mx-auto rounded-md h-[90px] shadow-primary px-4 lg:px-8 z-20 transition-all duration-500 flex items-center justify-between`}
+        } fixed bg-white w-full max-w-[90vw] lg:max-w-[1170px] mx-auto rounded-md h-[90px] shadow-primary px-4 lg:px-8 z-20 transition-all duration-500 flex items-center justify-between overflow-hidden`}
       >
         <div className="flex items-center">
           <Link to="/">
-            <img src={Logo} alt="Logo" className="h-[200px] w-[200px]" />
+            <img src={Logo} alt="Logo" className="h-[90px]" />
           </Link>
           <div className="hidden lg:flex">
             <Nav />

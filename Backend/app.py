@@ -17,15 +17,13 @@ def video_feed():
     global feed
     user_choice=request.args.get('id')
     flag=request.args.get('flag')
-    print(user_choice)
-    print(flag)
     if feed is None:
         feed = cv2.VideoCapture(0)
-    if flag=='gym':
-        response = Response(GymExerciseRecognizer().generate_frames(feed,user_choice), mimetype='multipart/x-mixed-replace; boundary=frame')
-    else:
+    if flag=='yoga':
         yoga = YogaExerciseRecognizer(user_choice)
         response = Response(yoga.generate_frames(feed), mimetype='multipart/x-mixed-replace; boundary=frame')
+    else:
+        response = Response(GymExerciseRecognizer().generate_frames(feed,user_choice), mimetype='multipart/x-mixed-replace; boundary=frame')
     return response
 
 @app.route('/cancel_feed')
