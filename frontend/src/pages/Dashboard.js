@@ -137,6 +137,7 @@ const Dashboard = () => {
         if (response.ok) {
           const data = await response.json();
           setRecommendations(data);
+          console.log(data.recommended_foods);
         } else {
           setRecommendations(null);
           console.error("Error fetching recommendations:", response.statusText);
@@ -261,10 +262,10 @@ const Dashboard = () => {
           <div className="mt-4 text-center">
             <h2 className="text-lg font-bold">Recommendations</h2>
             <p className="text-sm">
-              Foods: {recommendations.recommended_foods.join(", ")}
+              Foods: {recommendations.recommended_foods}
             </p>
             <p className="text-sm">
-              Exercises: {recommendations.recommended_exercises.join(", ")}
+              Exercises: {recommendations.recommended_exercises}
             </p>
             <p className="text-sm">
               Daily Caloric Intake: {recommendations.daily_caloric_intake}

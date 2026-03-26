@@ -5,7 +5,7 @@ from flask_cors import CORS
 import google.generativeai as genai
 
 genai.configure(api_key="")
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 app = Flask(__name__)
 CORS(app)
@@ -58,10 +58,33 @@ def bmi_feedback():
             f"Based on a BMI of {bmi}, which falls into the '{category}' category, "
             "provide 1. food recommendations, 2. exercise recommendations, "
             "3. The daily caloric intake and 4. burn suggestions.The format is important and for every heading 1 line is recomended."
-        )
+            """I am parsing like this follow the format and give response sections = response.text.strip().split("**")
+
+                # Create a dictionary to store sections
+                response_dict = {}
+
+                for section in sections:
+                    if section.strip():  # Skip empty sections
+                        # Separate the title from the content
+                        title, content = section.split("\n", 1)
+                        response_dict[title.strip()] = content.strip()
+
+                # Print extracted sections
+                food_recommendations = response_dict.get("Food Recommendations")
+                exercise_recommendations = response_dict.get("Exercise Recommendations")
+                daily_caloric_intake = response_dict.get("Daily Caloric Intake")
+                burn_suggestions = response_dict.get("Burn Suggestions")
+
+                return jsonify({
+                    "bmi_category": category,
+                    "recommended_foods": food_recommendations,
+                    "recommended_exercises": exercise_recommendations,
+                    "daily_caloric_intake": daily_caloric_intake,
+                    "calories_burned": burn_suggestions
+                })"""
+                )
         response = model.generate_content(prompt)
-        recommendations = response.text.strip().split('\n')
-        sections = response.text.strip().split("##")
+        sections = response.text.strip().split("**")
 
         # Create a dictionary to store sections
         response_dict = {}

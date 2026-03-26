@@ -13,6 +13,11 @@ const YogaAsanaDescription = () => {
 
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => {
+    setStart(false);
+    setIsModalOpen(false);
+  };
+
+  const handleStartTraining = () => {
     setStart(true);
     setIsModalOpen(false);
   };
@@ -107,7 +112,7 @@ const YogaAsanaDescription = () => {
                   comfortable environment and ready to practice!
                 </p>
                 <button
-                  onClick={handleModalClose}
+                  onClick={handleStartTraining}
                   className="bg-orange text-white rounded-lg hover:bg-orange-200 hover:text-white transition duration-300 float-right px-4 py-2"
                 >
                   Next
@@ -116,15 +121,23 @@ const YogaAsanaDescription = () => {
             </div>
           </div>
         )}
-      </div>
 
-      <div className="flex justify-center mt-4">
         {start && (
-          <VideoStream
-            userChoice={id}
-            flag={"yoga"}
-            className="w-[800px] h-[450px] object-cover"
-          />
+          <div
+            id="modal-container"
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50"
+          >
+            <div className="bg-white p-10 rounded-lg shadow-2xl w-[90%] md:w-[50%] h-[70%] flex flex-col justify-between">
+              {start && (
+                <VideoStream
+                  userChoice={id}
+                  flag={"yoga"}
+                  setStart={setStart}
+                  className="w-[1000px] h-[600px] object-cover"
+                />
+              )}
+            </div>
+          </div>
         )}
       </div>
     </>

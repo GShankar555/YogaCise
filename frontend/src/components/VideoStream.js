@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Speech from "./Speech";
 
-const VideoStream = ({ userChoice, flag }) => {
+const VideoStream = ({ userChoice, flag, setStart = null }) => {
   const [feedback, setFeedback] = useState("");
   const [counter, setCounter] = useState(0);
   const [state, setState] = useState("");
@@ -56,6 +56,10 @@ const VideoStream = ({ userChoice, flag }) => {
     if (confirmStop) {
       await fetch("http://localhost:5000/cancel_feed");
       setStreamActive(false);
+      if (setStart) {
+        setStart(false);
+      }
+      window.location.reload();
     }
   };
 
